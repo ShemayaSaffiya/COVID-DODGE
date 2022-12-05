@@ -19,10 +19,6 @@ app = Flask('app')
 def home():
   return render_template('homepage.html')
   
-@app.route('/login', methods=["POST", "GET"])
-def get_username():
-  return render_template("login.html")
-  
 @app.route('/username', methods=["POST", "GET"])
 def send_username():
   username = request.form["name_input"]
@@ -41,16 +37,6 @@ def display_leaderboard():
   number5 = db["number5"] + ": " + str(db["score5"])
   return render_template('leaderboard.html', number1=number1, number2=number2, number3=number3, number4=number4, number5=number5)
 
-@app.route("/update_leaderboard", methods = ["POST"])
-def new_score():
-  data = json.loads(request.data)
-  print(data)
-  if "username" in data and "score" in data:
-    username = data["username"]
-    score = data["score"]
-    print(username, score)
-    leaderboard.update_leaderboard(username, score)
-  return {"message":"Received!"}
     
   
 app.run(host='0.0.0.0', port=81)
