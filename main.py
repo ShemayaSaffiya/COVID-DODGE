@@ -1,65 +1,39 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from replit import db
+import leaderboard
+import json
 app = Flask('app')
 
-db["number1"] = "Dr.A"
-db["score1"] = 20
-db["number2"] = "Danielle"
-db["score2"] = 18
-db["number3"] = "Shemaya"
-db["score3"] = 17
-db["number4"] = "Antonia"
-db["score4"] = 10
-db["number5"] = "Brandon"
-db["score5"] = 3
+# db["number1"] = "Player 1"
+# db["score1"] = 0
+# db["number2"] = "Player 2"
+# db["score2"] = 0
+# db["number3"] = "Player 3"
+# db["score3"] = 0
+# db["number4"] = "Player 4"
+# db["score4"] = 0
+# db["number5"] = "Player 5"
+# db["score5"] = 0
 
 @app.route('/')
-def homepage():
-  number1 = db["number1"] + ": " + str(db["score1"])
-  number2 = db["number2"] + ": " + str(db["score2"])
-  number3 = db["number3"] + ": " + str(db["score3"])
-  number4 = db["number4"] + ": " + str(db["score4"])
-  number5 = db["number5"] + ": " + str(db["score5"])
-  return render_template('leaderboard.html', number1=number1, number2=number2, number3=number3, number4=number4, number5=number5)
-
-
-@app.route("/leaderboard", methods=["POST", "GET"])
-def leaderboard():
+def home():
+  return render_template('homepage.html')
+  
+@app.route('/login', methods=["POST", "GET"])
+def get_username():
+  return render_template("login.html")
+  
+@app.route('/username', methods=["POST", "GET"])
+def send_username():
   username = request.form["name_input"]
-  score = request.form["score_input"]
-  if score > db["score1"]:
-    db["number5"] = db["number4"]
-    db["score5"] = db["score4"]
-    db["number4"] = db["number3"]
-    db["score4"] = db["score3"]
-    db["number3"] = db["number2"]
-    db["score3"] = db["score2"]
-    db["number1"] = username
-    db["score1"] = score
-  elif score > db["score2"]:
-    db["number5"] = db["number4"]
-    db["score5"] = db["score4"]
-    db["number4"] = db["number3"]
-    db["score4"] = db["score3"]
-    db["number3"] = db["number2"]
-    db["score3"] = db["score2"]
-    db["number2"] = username
-    db["score2"] = score
-  elif score > db["score3"]:
-    db["number5"] = db["number4"]
-    db["score5"] = db["score4"]
-    db["number4"] = db["number3"]
-    db["score4"] = db["score3"]
-    db["number3"] = username
-    db["score3"] = score
-  elif score > db["score4"]:
-    db["number5"] = db["number4"]
-    db["score5"] = db["score4"]
-    db["number4"] = username
-    db["score4"] = score
-  elif score > db["score5"]:
-    db["number5"] = username
-    db["score5"] = score
+  return jsonify({"username":username})
+  
+@app.route('/instructions')
+def instructions():
+  return render_template("instructions.html")
+
+@app.route("/leaderboard")
+def display_leaderboard():
   number1 = db["number1"] + ": " + str(db["score1"])
   number2 = db["number2"] + ": " + str(db["score2"])
   number3 = db["number3"] + ": " + str(db["score3"])
@@ -67,4 +41,16 @@ def leaderboard():
   number5 = db["number5"] + ": " + str(db["score5"])
   return render_template('leaderboard.html', number1=number1, number2=number2, number3=number3, number4=number4, number5=number5)
 
+@app.route("/update_leaderboard", methods = ["POST"])
+def new_score():
+  data = json.loads(request.data)
+  print(data)
+  if "username" in data and "score" in data:
+    username = data["username"]
+    score = data["score"]
+    print(username, score)
+    leaderboard.update_leaderboard(username, score)
+  return {"message":"Received!"}
+    
+  
 app.run(host='0.0.0.0', port=81)
