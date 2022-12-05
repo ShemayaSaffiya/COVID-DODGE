@@ -30,12 +30,7 @@ def instructions():
 
 @app.route("/leaderboard")
 def display_leaderboard():
-  number1 = db["number1"] + ": " + str(db["score1"])
-  number2 = db["number2"] + ": " + str(db["score2"])
-  number3 = db["number3"] + ": " + str(db["score3"])
-  number4 = db["number4"] + ": " + str(db["score4"])
-  number5 = db["number5"] + ": " + str(db["score5"])
-  return render_template('leaderboard.html', number1=number1, number2=number2, number3=number3, number4=number4, number5=number5)
+  return render_template("getLeaderboard.html")
 
     
   

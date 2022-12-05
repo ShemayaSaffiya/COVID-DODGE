@@ -186,6 +186,17 @@ MarkupSafe = ">=2.0"
 i18n = ["Babel (>=2.7)"]
 
 [[package]]
+name = "leaderboard"
+version = "3.7.3"
+description = "Leaderboards backed by Redis in Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+redis = "*"
+
+[[package]]
 name = "markupsafe"
 version = "2.1.1"
 description = "Safely add untrusted strings to HTML/XML markup."
@@ -294,6 +305,21 @@ validation = ["pydantic (>=1.7.4)"]
 global = ["appdirs (>=1.4.4)"]
 gen_docs = ["pytoolconfig", "sphinx-rtd-theme (>=1.0.0)", "sphinx-autodoc-typehints (>=1.18.1)", "sphinx (>=4.5.0)"]
 doc = ["sphinx (>=4.5.0)", "tabulate (>=0.8.9)"]
+
+[[package]]
+name = "redis"
+version = "4.4.0"
+description = "Python client for Redis database and key-value store"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+async-timeout = ">=4.0.2"
+
+[package.extras]
+hiredis = ["hiredis (>=1.0.0)"]
+ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
 
 [[package]]
 name = "replit"
@@ -478,7 +504,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8.0,<3.9"
-content-hash = "f328c469a46d9cb95c79b10c69318f07ccca3f40cc6eb43ef51c87ad2ff1879b"
+content-hash = "8ac5b5c54584e51cf2ce0eb21feea4b62188a009eb24b2eabcb96af0f44197a4"
 
 [metadata.files]
 aiohttp = []
@@ -497,6 +523,7 @@ importlib-metadata = []
 itsdangerous = []
 jedi = []
 jinja2 = []
+leaderboard = []
 markupsafe = []
 multidict = []
 numpy = []
@@ -507,6 +534,7 @@ pyflakes = []
 pyparsing = []
 python-lsp-jsonrpc = []
 pytoolconfig = []
+redis = []
 replit = []
 replit-python-lsp-server = []
 requests = []
